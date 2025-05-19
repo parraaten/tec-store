@@ -36,7 +36,7 @@ npm install
 npm run dev  # Inicia servidor en http://localhost:5173
 ```
 
-### 📌 Notas adicionales:
+## 📌 Notas adicionales:
 1. **Para XAMPP**: Asegúrate de que en `.env` de Laravel tengas:
    ```env
    DB_CONNECTION=mysql
