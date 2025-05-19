@@ -57,4 +57,3 @@ Edita el archivo `api/.env` con estos valores:
 ---
 
 > 💡 **Tip**: Usa `php artisan make:model Product -mc` para crear modelo, migración y controlador en un solo comando.
-```
