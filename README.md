@@ -27,11 +27,14 @@ php artisan key:generate
 php artisan migrate --seed  # Ejecuta migraciones con datos de prueba
 php artisan storage:link   # Para manejar archivos
 php artisan serve          # Inicia servidor en http://localhost:8000
+```
 
 ### 3. Frontend (Vue 3)
+```bash
 cd ui
 npm install
 npm run dev  # Inicia servidor en http://localhost:5173
+```
 
 ### 📌 Notas adicionales:
 1. **Para XAMPP**: Asegúrate de que en `.env` de Laravel tengas:
@@ -42,3 +45,4 @@ npm run dev  # Inicia servidor en http://localhost:5173
    DB_DATABASE=tec_store
    DB_USERNAME=root
    DB_PASSWORD=
+   ```
