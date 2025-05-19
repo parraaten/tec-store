@@ -23,10 +23,10 @@ Proyecto de e-commerce con Laravel (API) + Vue 3 (Frontend).
 ### 2. Backend (Laravel API)
 ```bash
 cd api
-cp .env.example .env  # Configura tus variables de DB en .env (DB_DATABASE=tec_store)
-composer install
+cp .env.example .env       # Configura tus credenciales de DB en el archivo .env
+composer install           # Instala dependencias PHP
 php artisan key:generate
-php artisan migrate --seed  # Ejecuta migraciones con datos de prueba
+php artisan migrate --seed # Ejecuta migraciones + datos de prueba
 php artisan storage:link   # Para manejar archivos
 php artisan serve          # Inicia servidor en http://localhost:8000
 ```
@@ -34,8 +34,8 @@ php artisan serve          # Inicia servidor en http://localhost:8000
 ### 3. Frontend (Vue 3)
 ```bash
 cd ui
-npm install
-npm run dev  # Inicia servidor en http://localhost:5173
+npm install    # Instala dependencias de Node.js
+npm run dev    # Inicia servidor en http://localhost:5173
 ```
 
 ## Configuración de Entorno (.env)
@@ -48,3 +48,13 @@ Edita el archivo `api/.env` con estos valores:
    DB_USERNAME=root
    DB_PASSWORD=
    ```
+
+## Recursos Adicionales
+- [Documentación de Laravel](https://laravel.com/docs)
+- [Documentación de Vue](https://vuejs.org/guide)
+- [MySQL con XAMPP](https://www.apachefriends.org/es/faq_linux.html#mysql)
+
+---
+
+> 💡 **Tip**: Usa `php artisan make:model Product -mc` para crear modelo, migración y controlador en un solo comando.
+```
