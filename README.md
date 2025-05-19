@@ -3,10 +3,12 @@
 Proyecto de e-commerce con Laravel (API) + Vue 3 (Frontend).
 
 ## Requisitos
-- PHP 8.2
-- Node.js 22.15.0
-- XAMPP (MySQL)
-- Composer
+| Recurso           | Versión   | Descarga                                                                 |
+|-------------------|-----------|--------------------------------------------------------------------------|
+| PHP               | ≥ 8.2     | Incluido en XAMPP                                                       |
+| Composer          | Latest    | [Descargar Composer](https://getcomposer.org/download/)                 |
+| Node.js           | 22.15.0   | [Descargar Node.js](https://nodejs.org/es)                              |
+| XAMPP (MySQL)     | Latest    | [Descargar XAMPP](https://www.apachefriends.org/es/index.html)          |
 
 ---
 
@@ -36,8 +38,8 @@ npm install
 npm run dev  # Inicia servidor en http://localhost:5173
 ```
 
-## 📌 Notas adicionales
-1. **Para XAMPP**: Asegúrate de que en `.env` de Laravel tengas:
+## Configuración de Entorno (.env)
+Edita el archivo `api/.env` con estos valores:
    ```env
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
