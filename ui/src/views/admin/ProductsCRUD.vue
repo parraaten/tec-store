@@ -9,8 +9,11 @@
         <!-- Tarjeta contenedora con efecto neón -->
         <div class="gamer-card">
             <!-- Botón para crear nuevo producto -->
-            <el-button type="primary" class="create-button" @click="openCreateModal" icon="el-icon-plus">
-                Nuevo Producto
+            <el-button type="primary" class="create-button" @click="openCreateModal">
+                <el-icon><plus /></el-icon>
+                <span>
+                    Nuevo Producto
+                </span>
             </el-button>
 
             <!-- Tabla de Productos con estilo gamer -->
