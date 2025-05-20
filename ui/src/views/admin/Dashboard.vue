@@ -11,7 +11,7 @@
 
             <div class="space-y-4">
                 <div>
-                    <label class="block text-gray-400 text-sm mb-1">Usuario</label>
+                    <label class="block text-gray-400 text-sm mb-1">E-mail</label>
                     <input v-model="email" type="text"
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
                         placeholder="admin@tstore.com">
