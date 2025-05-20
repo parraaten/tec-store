@@ -15,7 +15,7 @@
 
             <!-- Tabla de Productos con estilo gamer -->
             <el-table :data="products" style="width: 100%" :loading="loading" class="gamer-table">
-                <el-table-column label="Producto" width="220">
+                <el-table-column label="Producto" >
                     <template #default="scope">
                         <div class="product-cell">
                             <el-image v-if="scope.row.image" :src="scope.row.image" fit="cover" class="product-image">
@@ -37,7 +37,7 @@
                         <span class="price-tag">{{ formatPrice(scope.row.price) }}</span>
                     </template>
                 </el-table-column>
-                <el-table-column label="Stock" prop="stock" width="100" align="center">
+                <el-table-column label="Stock" prop="stock" width="120" align="center">
                     <template #default="scope">
                         <el-tag :type="scope.row.stock > 10 ? 'success' : scope.row.stock > 0 ? 'warning' : 'danger'">
                             {{ scope.row.stock }} unidades
@@ -47,16 +47,21 @@
                 <el-table-column label="Acciones" width="180" align="center">
                     <template #default="scope">
                         <el-tooltip content="Editar" placement="top">
-                            <el-button size="small" type="primary" icon="el-icon-edit" circle
-                                @click="openEditModal(scope.row)" />
+                        <el-button size="small" type="primary" circle @click="openEditModal(scope.row)">
+                        <el-icon><EditPen /></el-icon>
+                        </el-button>
                         </el-tooltip>
+
                         <el-tooltip content="Eliminar" placement="top">
-                            <el-button size="small" type="danger" icon="el-icon-delete" circle
-                                @click="deleteProduct(scope.row.id)" />
+                        <el-button size="small" type="danger"  circle @click="deleteProduct(scope.row.id)">
+                        <el-icon><Delete /></el-icon>
+                        </el-button>
                         </el-tooltip>
+
                     </template>
                 </el-table-column>
             </el-table>
+            
         </div>
 
         <!-- Modal para Crear/Editar Producto -->
