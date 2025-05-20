@@ -1,9 +1,9 @@
 <template>
-  <div class="py-8 px-4 sm:px-6 lg:px-8">
+  <div class="px-4 sm:px-6 lg:px-8">
     <div class="max-w-4xl mx-auto">
       <!-- Encabezado -->
-      <div class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-orange-400 mb-2">TU CARRITO</h1>
+      <div class="text-center my-6">
+        <h1 class="text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">TU CARRITO</h1>
         <p class="text-gray-400">Revisa tus productos antes de comprar</p>
       </div>
 
@@ -12,7 +12,8 @@
         <h3 class="text-xl font-semibold text-gray-300 mb-2">Tu carrito está vacío</h3>
         <router-link 
           to="/" 
-          class="inline-flex items-center px-4 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
+          class="inline-flex items-center p-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
+          style="color: white !important;"
         >
           Volver a la tienda
         </router-link>
@@ -149,6 +150,10 @@ const checkout = () => {
 </script>
 
 <style scoped>
+/* Efecto de neón para el título */
+h1 {
+  text-shadow: 0 0 8px rgba(251, 146, 60, 0.3);
+}
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

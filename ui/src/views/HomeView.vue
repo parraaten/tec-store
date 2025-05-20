@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import axios from '@/config/axios'
 import ProductCard from '@/components/ProductCard.vue'
 import { Loading, Box, Plus } from '@element-plus/icons-vue'

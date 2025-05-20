@@ -3,7 +3,7 @@
     <div class="py-8 px-4 sm:px-6 lg:px-8">
         <!-- Sistema de autenticación -->
         <div v-if="!authStore.isAuthenticated" class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-8">
-            <h2 class="text-2xl font-bold text-center text-orange-400 mb-6">ACCESO ADMINISTRADOR</h2>
+            <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400 mb-6">LOGIN</h1>
 
             <div v-if="loginError" class="mb-4 p-3 bg-red-900/50 text-red-300 rounded-lg text-sm">
                 Credenciales incorrectas
