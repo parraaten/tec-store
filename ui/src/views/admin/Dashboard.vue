@@ -1,7 +1,8 @@
+<!-- eslint-disable vue/multi-word-component-names -->
 <template>
     <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
-        <!-- Sistema de autenticación básico -->
-        <div v-if="!isAuthenticated" class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-8">
+        <!-- Sistema de autenticación -->
+        <div v-if="!authStore.isAuthenticated" class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-8">
             <h2 class="text-2xl font-bold text-center text-orange-400 mb-6">ACCESO ADMINISTRADOR</h2>
 
             <div v-if="loginError" class="mb-4 p-3 bg-red-900/50 text-red-300 rounded-lg text-sm">
@@ -11,9 +12,9 @@
             <div class="space-y-4">
                 <div>
                     <label class="block text-gray-400 text-sm mb-1">Usuario</label>
-                    <input v-model="username" type="text"
+                    <input v-model="email" type="text"
                         class="w-full bg-gray-700 border border-gray-600 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange-500"
-                        placeholder="admin">
+                        placeholder="admin@tstore.com">
                 </div>
 
                 <div>
@@ -38,7 +39,8 @@
                     class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">
                     PANEL DE CONTROL
                 </h1>
-                <button @click="logout" class="flex items-center text-gray-400 hover:text-orange-400 transition-colors">
+                <button @click="authStore.logout"
+                    class="flex items-center text-gray-400 hover:text-orange-400 transition-colors">
                     <el-icon class="mr-1">
                         <SwitchButton />
                     </el-icon>
@@ -65,57 +67,54 @@
                         </el-icon>
                     </div>
                 </router-link>
-
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { Box, ShoppingCart, User, PieChart, ArrowRight, SwitchButton } from '@element-plus/icons-vue'
+import { ref, onMounted } from 'vue' // Añade onMounted al import
+import { Box, ArrowRight, SwitchButton } from '@element-plus/icons-vue'
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
-// Autenticación básica
-const isAuthenticated = ref(false)
-const loginError = ref(false)
-const username = ref('')
+const authStore = useAuthStore()
+const router = useRouter()
+const email = ref('')
 const password = ref('')
+const loginError = ref(false)
 
-const handleLogin = () => {
-    // Aquí puedes cambiar las credenciales que quieras
-    const validCredentials = [
-        { user: 'kevin', pass: 'mamalon13' },
-        { user: 'admin', pass: 'admin123' },
-        { user: 'staff', pass: 'staff123' }
-    ]
-
-    const isValid = validCredentials.some(
-        cred => username.value === cred.user && password.value === cred.pass
-    )
-
-    if (isValid) {
-        isAuthenticated.value = true
+const handleLogin = async () => {
+    try {
+        await authStore.login({
+            email: email.value,
+            password: password.value
+        })
         loginError.value = false
-    } else {
+        // Redirige al dashboard protegido después del login
+        router.push('/admin/dashboard')
+    } catch (err) {
         loginError.value = true
         password.value = ''
+        console.error('Login error:', err)
     }
 }
 
-const logout = () => {
-    isAuthenticated.value = false
-    username.value = ''
-    password.value = ''
-}
+onMounted(() => {
+  console.log('Auth state:', authStore.isAuthenticated)
+  // Si ya está autenticado pero está en /admin, redirige al dashboard
+  if (authStore.isAuthenticated && router.currentRoute.value.path === '/admin') {
+    router.push('/admin/dashboard')
+  }
+})
 </script>
 
 <style scoped>
-/* Efecto de neón para el título */
+/* Mantén tus estilos actuales */
 h1 {
     text-shadow: 0 0 8px rgba(251, 146, 60, 0.3);
 }
 
-/* Transición para las tarjetas */
 .group:hover {
     transform: translateY(-2px);
 }
