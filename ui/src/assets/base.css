@@ -54,11 +54,9 @@
 *::before,
 *::after {
   box-sizing: border-box;
-  font-weight: normal;
 }
 
 body {
-  min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
   transition:

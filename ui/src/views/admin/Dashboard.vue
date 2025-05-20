@@ -1,6 +1,6 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-    <div class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
+    <div class="py-8 px-4 sm:px-6 lg:px-8">
         <!-- Sistema de autenticación -->
         <div v-if="!authStore.isAuthenticated" class="max-w-md mx-auto bg-gray-800 rounded-xl shadow-lg p-8">
             <h2 class="text-2xl font-bold text-center text-orange-400 mb-6">ACCESO ADMINISTRADOR</h2>

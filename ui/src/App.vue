@@ -20,7 +20,7 @@
 
       <!-- Contenido del router con contenedor estilizado -->
       <div class="relative z-10">
-        <router-view class="min-h-[calc(100vh-8rem)]" />
+        <router-view />
       </div>
     </main>
 
