@@ -111,20 +111,25 @@
                         <el-form-item label="Imagen del producto">
                             <el-upload class="upload-demo" action="#" :on-change="handleImageChange"
                                 :auto-upload="false" :show-file-list="false">
-                                <el-button type="primary" size="small">Seleccionar imagen</el-button>
-                                <span v-if="currentProduct.imageFile" class="image-name">
-                                    {{ currentProduct.imageFile.name || 'Imagen seleccionada' }}
-                                </span>
+                                <div class="image-preview-list">
+                             
+                                    <el-image v-if="currentProduct.image && typeof currentProduct.image === 'string'"
+                                    :src="currentProduct.image" fit="cover" class="preview-image"
+                                    :preview-src-list="[currentProduct.image]">
+                                    </el-image>
+                                    <span v-if="currentProduct.imageFile" class="image-name">
+                                        {{ currentProduct.imageFile.name || 'Imagen seleccionada' }}
+                                    </span>
+                                    <el-button type="primary" size="small">Seleccionar imagen</el-button>
+                                </div>
+
                                 <template #tip>
                                     <div class="el-upload__tip">
                                         Sube una imagen del producto (JPG/PNG, máximo 2MB)
                                     </div>
                                 </template>
                             </el-upload>
-                            <el-image v-if="currentProduct.image && typeof currentProduct.image === 'string'"
-                                :src="currentProduct.image" fit="cover" class="preview-image"
-                                :preview-src-list="[currentProduct.image]">
-                            </el-image>
+    
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -220,7 +225,12 @@ const closeModal = () => {
 
 // Manejar cambio de imagen
 const handleImageChange = (file) => {
+    // Revocar URL anterior si existe para evitar fuga de memoria
+    if (currentProduct.value.image) {
+        URL.revokeObjectURL(currentProduct.value.image)
+    }
     currentProduct.value.imageFile = file.raw
+    currentProduct.value.image = URL.createObjectURL(file.raw) // Crear una URL temporal para previsualizar la imagen seleccionada localmente
 }
 
 // Guardar un producto (crear o actualizar)
@@ -451,6 +461,7 @@ const deleteProduct = async (productId) => {
     border-radius: 5px;
     margin-top: 10px;
     border: 1px solid #3d3d3d;
+    align-self: center;
 }
 
 .image-name {
