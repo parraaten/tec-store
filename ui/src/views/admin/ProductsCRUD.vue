@@ -146,6 +146,7 @@
 import { ref, onMounted } from 'vue'
 import axios from '@/config/axios'
 import { ElNotification, ElMessageBox } from 'element-plus'
+import { useAuthStore } from '@/stores/auth'
 
 const products = ref([])
 const loading = ref(true)
@@ -170,18 +171,26 @@ onMounted(async () => {
 // Función para cargar los productos
 const loadProducts = async () => {
     try {
-        loading.value = true
-        const response = await axios.get('/products')
-        products.value = response.data
+        loading.value = true;
+        const response = await axios.get('/products', {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
+            }
+        });
+        products.value = response.data;
     } catch (error) {
-        console.error('Error cargando los productos:', error)
+        console.error('Error cargando los productos:', error);
+        if (error.response?.status === 401) {
+            const authStore = useAuthStore();
+            authStore.logout();
+        }
         ElNotification({
             title: 'Error',
             message: 'No se pudieron cargar los productos',
             type: 'error'
-        })
+        });
     } finally {
-        loading.value = false
+        loading.value = false;
     }
 }
 
@@ -228,15 +237,20 @@ const handleImageChange = (file) => {
 const saveProduct = async () => {
     saving.value = true;
     try {
+        // Verificar autenticación primero
+        const authStore = useAuthStore();
+        if (!authStore.isAuthenticated) {
+            throw new Error('No autenticado');
+        }
+
         const formData = new FormData();
         formData.append('name', currentProduct.value.name);
         formData.append('description', currentProduct.value.description);
         formData.append('price', currentProduct.value.price);
         formData.append('stock', currentProduct.value.stock);
 
-        // Asegúrate de que _method esté definido para actualización
         if (currentProduct.value.id) {
-            formData.append('_method', 'PUT'); // Esto es crucial para Laravel
+            formData.append('_method', 'PUT');
         }
 
         if (currentProduct.value.imageFile) {
@@ -247,9 +261,11 @@ const saveProduct = async () => {
             ? `/products/${currentProduct.value.id}`
             : '/products';
 
+        // eslint-disable-next-line no-unused-vars
         const response = await axios.post(url, formData, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'multipart/form-data',
+                'Authorization': `Bearer ${localStorage.getItem('auth_token')}`
             }
         });
 
@@ -261,16 +277,29 @@ const saveProduct = async () => {
             type: 'success'
         });
 
-        loadProducts();
+        await loadProducts();
         closeModal();
     } catch (error) {
         console.error('Error guardando el producto:', error);
-        ElNotification({
-            title: 'Error',
-            message: error.response?.data?.message || 'No se pudo guardar el producto',
-            type: 'error',
-            duration: 5000
-        });
+        
+        if (error.response?.status === 401) {
+            // Token inválido o expirado
+            const authStore = useAuthStore();
+            authStore.logout();
+            ElNotification({
+                title: 'Sesión expirada',
+                message: 'Por favor inicie sesión nuevamente',
+                type: 'warning',
+                duration: 5000
+            });
+        } else {
+            ElNotification({
+                title: 'Error',
+                message: error.response?.data?.message || 'No se pudo guardar el producto',
+                type: 'error',
+                duration: 5000
+            });
+        }
     } finally {
         saving.value = false;
     }
@@ -308,6 +337,13 @@ const deleteProduct = async (productId) => {
         }
     }
 }
+onMounted(async () => {
+    const authStore = useAuthStore();
+    if (!authStore.isAuthenticated) {
+        await authStore.init(); // Intenta verificar el token
+    }
+    await loadProducts();
+});
 </script>
 
 <style scoped>

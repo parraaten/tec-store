@@ -3,6 +3,7 @@ import HomeView from '@/views/HomeView.vue'
 import CartView from '@/views/CartView.vue'
 import AdminDashboard from '@/views/admin/Dashboard.vue'
 import ProductsCRUD from '@/views/admin/ProductsCRUD.vue'
+import { useAuthStore } from '@/stores/auth'
 
 const routes = [
   {
@@ -17,6 +18,12 @@ const routes = [
   },
   {
     path: '/admin',
+    name: 'admin-login',
+    component: AdminDashboard
+  },
+  // Rutas protegidas
+  {
+    path: '/admin/dashboard',
     name: 'admin-dashboard',
     component: AdminDashboard,
     meta: { requiresAuth: true }
@@ -33,5 +40,18 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  
+  // Solo proteger rutas marcadas explícitamente
+  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+    // Redirigir al login (ruta sin protección)
+    next('/admin')
+  } else {
+    next()
+  }
+})
+
 
 export default router
