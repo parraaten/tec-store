@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Product;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+
+
 
 class ProductController extends Controller
 {
@@ -111,5 +115,33 @@ class ProductController extends Controller
         return response()->json([
             'message' => 'Producto eliminado exitosamente'
         ], 204);
+    }
+    
+    public function reviews($id)
+    {
+        $product = Product::with('reviews.user')->findOrFail($id);
+        return response()->json($product->reviews);
+        
+    }
+
+   public function addReview(Request $request, $id)
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'comment' => 'required|string|max:500',
+            'rating' => 'required|integer|min:1|max:5',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        $review = new Review([
+            'user_id' => $request->user_id,
+            'comment' => $request->comment,
+            'rating' => $request->rating,
+        ]);
+
+        $product->reviews()->save($review);
+
+        return response()->json(['message' => 'Reseña agregada correctamente'], 201);
     }
 }

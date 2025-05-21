@@ -30,6 +30,8 @@ Route::get('/test', function () {
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{product}', [ProductController::class, 'show']);
+Route::get('/products/{id}/reviews', [ProductController::class, 'reviews']);
+Route::post('/products/{id}/reviews', [ProductController::class, 'addReview']);
 
 // Rutas protegidas
 Route::middleware('auth:sanctum')->group(function () {

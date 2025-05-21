@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import CartView from '@/views/CartView.vue'
+import ProductDetail from '@/views/ProductDetail.vue'
 import AdminDashboard from '@/views/admin/Dashboard.vue'
 import ProductsCRUD from '@/views/admin/ProductsCRUD.vue'
 import { useAuthStore } from '@/stores/auth'
@@ -20,6 +21,11 @@ const routes = [
     path: '/admin',
     name: 'admin-login',
     component: AdminDashboard
+  },
+  {
+    path: '/product/:id',
+    name: 'productDetail',
+    component: ProductDetail
   },
   // Rutas protegidas
   {
