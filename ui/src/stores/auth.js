@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 
@@ -7,6 +7,8 @@ export const useAuthStore = defineStore('auth', () => {
     const user = ref(null)
     const isAuthenticated = ref(false)
     const router = useRouter()
+
+    const isAdmin = computed(() => user.value?.id === 1)
 
     // Inicialización al cargar el store
     const init = () => {
@@ -18,25 +20,45 @@ export const useAuthStore = defineStore('auth', () => {
     }
     init()
 
-    async function login(credentials) {
+    async function register(userData) {
         try {
-            const response = await axios.post('/login', credentials)
+            const response = await axios.post('/register', userData)
+            const token = response.data.token
             
-            // Asegúrate que la respuesta tiene la estructura correcta
-            if (!response.data || !response.data.token) {
-                throw new Error('Respuesta inválida del servidor')
+            if (!token) {
+            throw new Error('No se recibió token en el registro')
             }
             
-            const token = response.data.token
             localStorage.setItem('auth_token', token)
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
             isAuthenticated.value = true
             
             return response
-        } catch (err) {
-            console.error('Error en login:', err.response ? err.response.data : err.message)
+        } catch (error) {
+            console.error('Registration error:', error)
+            throw error
+        }
+    }
+
+    async function login(credentials) {
+        try {
+            const response = await axios.post('/login', credentials)
+            const token = response.data.token
+            
+            if (!token) throw new Error('Token no recibido')
+            
+            localStorage.setItem('auth_token', token)
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+            
+            // Obtener datos del usuario
+            const userResponse = await axios.get('/user')
+            user.value = userResponse.data
+            isAuthenticated.value = true
+            
+            return response
+        } catch (error) {
             logout()
-            throw err // Re-lanzamos el error para manejarlo en el componente
+            throw error
         }
     }
 
@@ -50,8 +72,10 @@ export const useAuthStore = defineStore('auth', () => {
 
     return { 
         user, 
-        isAuthenticated, 
+        isAuthenticated,
+        isAdmin,
+        register,
         login, 
-        logout 
+        logout
     }
 })

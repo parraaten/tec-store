@@ -2,9 +2,9 @@
   <div class="px-4 sm:px-6 lg:px-8">
     <!-- Encabezado con estilo gamer -->
     <div class="max-w-7xl mx-auto text-center my-6">
-      <h1 class="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">
+      <h2 class="text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">
         CATÁLOGO GAMER
-      </h1>
+      </h2>
       <p class="text-gray-400 max-w-2xl mx-auto">
         Descubre los mejores productos para llevar tu experiencia de juego al siguiente nivel
       </p>
@@ -72,10 +72,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-/* Efecto de neón para el título */
-h1 {
-  text-shadow: 0 0 8px rgba(251, 146, 60, 0.3);
-}
 
 /* Transición suave para las tarjetas */
 .grid {

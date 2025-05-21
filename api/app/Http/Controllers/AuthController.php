@@ -9,6 +9,13 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+    public function user(Request $request)
+    {
+        return response()->json([
+            'user' => $request->user(),
+            'is_admin' => $request->user()->id === 1
+        ]);
+    }
     public function register(Request $request)
     {
         $request->validate([
