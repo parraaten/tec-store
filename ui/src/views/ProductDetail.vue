@@ -152,6 +152,7 @@ const reviews = ref([])
 const loading = ref(true)
 const imageError = ref(false)
 const cartStore = useCartStore()
+const auth = useAuthStore()
 
 const loadReviews = async () => {
   try {
@@ -217,7 +218,7 @@ const addToCart = (product) => {
 
 
 const newReview = ref({
-  user_id: 1, 
+  user_id: auth.user?.id || null,
   comment: '',
   rating: ''
 })
