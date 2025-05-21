@@ -115,7 +115,7 @@
   <div v-else class="text-gray-400">Este producto aún no tiene reseñas.</div>
 
   <!-- Formulario de reseña -->
-  <form v-if="authStore.isAuthenticated" @submit.prevent="submitReview" class="mt-6 space-y-4 bg-gray-800 p-4 rounded-lg border border-gray-700">
+  <form v-if="authStore.isAuthenticated" @submit.prevent="submitReview" class="mt-6 space-y-4 bg-gray-800 p-4 pb-10rounded-lg border border-gray-700">
     <h3 class="text-xl font-semibold">Escribir una reseña</h3>
     <div>
       <label class="block mb-1">Comentario</label>
@@ -132,6 +132,9 @@
       Enviar reseña
     </el-button>
   </form>
+   <div class="bg-gray-700 text-sm  p-3 rounded-md">
+  
+  </div>
 </div>
 
 </template>
