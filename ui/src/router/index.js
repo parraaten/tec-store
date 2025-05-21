@@ -4,6 +4,7 @@ import CartView from '@/views/CartView.vue'
 import ProductDetail from '@/views/ProductDetail.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AdminDashboard from '@/views/admin/Dashboard.vue'
+import UsersCRUD from '@/views/admin/UsersCRUD.vue'
 import ProductsCRUD from '@/views/admin/ProductsCRUD.vue'
 import { useAuthStore } from '@/stores/auth'
 
@@ -46,16 +47,16 @@ const routes = [
     name: 'admin-account',
     component: () => import('@/views/admin/AccountView.vue'),
     meta: { requiresAuth: true }
-  },
+  },*/
   {
     path: '/admin/users',
     name: 'admin-users',
-    component: () => import('@/views/admin/UsersView.vue'),
+    component: UsersCRUD,
     meta: { 
       requiresAuth: true,
       requiresAdmin: true 
     }
-  },*/
+  },
   {
     path: '/admin/products',
     name: 'admin-products',
