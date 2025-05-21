@@ -132,7 +132,7 @@
       Enviar reseña
     </el-button>
   </form>
-   <div class="bg-gray-700 text-sm  p-3 rounded-md">
+   <div class=" text-sm  p-3 rounded-md">
   
   </div>
 </div>
