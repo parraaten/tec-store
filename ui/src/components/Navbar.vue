@@ -34,7 +34,7 @@
                     <router-link to="/admin"
                         class="px-1 py-2 text-gray-300 hover:text-orange-400 transition-colors duration-300 relative group"
                         :class="{ 'text-orange-400': $route.path.startsWith('/admin') }">
-                        Admin
+                        Panel
                         <span
                             class="absolute bottom-0 left-0 w-0 h-0.5 bg-orange-400 transition-all duration-300 group-hover:w-full"
                             :class="{ 'w-full': $route.path.startsWith('/admin') }"></span>
