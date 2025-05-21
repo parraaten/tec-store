@@ -115,7 +115,7 @@
   <div v-else class="text-gray-400">Este producto aún no tiene reseñas.</div>
 
   <!-- Formulario de reseña -->
-  <form @submit.prevent="submitReview" class="mt-6 space-y-4 bg-gray-800 p-4 rounded-lg border border-gray-700">
+  <form v-if="authStore.isAuthenticated" @submit.prevent="submitReview" class="mt-6 space-y-4 bg-gray-800 p-4 rounded-lg border border-gray-700">
     <h3 class="text-xl font-semibold">Escribir una reseña</h3>
     <div>
       <label class="block mb-1">Comentario</label>
@@ -139,11 +139,13 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
 import axios from '@/config/axios'
 import { ElNotification } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import { useCartStore } from '@/stores/cart'
 
+const authStore = useAuthStore()
 const route = useRoute()
 const product = ref(null)
 const reviews = ref([])

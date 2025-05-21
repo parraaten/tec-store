@@ -147,8 +147,14 @@ const handleLogin = async () => {
     }
 }
 
-onMounted(() => {
-  console.log('Auth state:', authStore.isAuthenticated)
+onMounted(async () => {
+  console.log('Auth state:', authStore.isAuthenticated, 'Admin state:', authStore.isAdmin)
+  
+  // Si hay token pero no hay usuario cargado
+  if (localStorage.getItem('auth_token') && !authStore.user) {
+    await authStore.loadUser()
+  }
+
   // Si ya está autenticado pero está en /admin, redirige al dashboard
   if (authStore.isAuthenticated && router.currentRoute.value.path === '/admin') {
     router.push('/admin/dashboard')
