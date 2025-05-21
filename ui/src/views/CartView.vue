@@ -3,7 +3,7 @@
     <div class="max-w-4xl mx-auto">
       <!-- Encabezado -->
       <div class="text-center my-6">
-        <h1 class="text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">TU CARRITO</h1>
+        <h2 class="text-3xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">TU CARRITO</h2>
         <p class="text-gray-400">Revisa tus productos antes de comprar</p>
       </div>
 
@@ -150,10 +150,6 @@ const checkout = () => {
 </script>
 
 <style scoped>
-/* Efecto de neón para el título */
-h1 {
-  text-shadow: 0 0 8px rgba(251, 146, 60, 0.3);
-}
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;

@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import CartView from '@/views/CartView.vue'
 import ProductDetail from '@/views/ProductDetail.vue'
+import RegisterView from '@/views/RegisterView.vue'
 import AdminDashboard from '@/views/admin/Dashboard.vue'
 import ProductsCRUD from '@/views/admin/ProductsCRUD.vue'
 import { useAuthStore } from '@/stores/auth'
@@ -27,18 +28,42 @@ const routes = [
     name: 'productDetail',
     component: ProductDetail
   },
+  {
+    path: '/register',
+    name: 'register',
+    component: RegisterView,
+    meta: { requiresGuest: true } // Solo para usuarios no autenticados
+  },
   // Rutas protegidas
   {
     path: '/admin/dashboard',
     name: 'admin-dashboard',
     component: AdminDashboard,
     meta: { requiresAuth: true }
+  },/*
+  {
+    path: '/admin/account',
+    name: 'admin-account',
+    component: () => import('@/views/admin/AccountView.vue'),
+    meta: { requiresAuth: true }
   },
+  {
+    path: '/admin/users',
+    name: 'admin-users',
+    component: () => import('@/views/admin/UsersView.vue'),
+    meta: { 
+      requiresAuth: true,
+      requiresAdmin: true 
+    }
+  },*/
   {
     path: '/admin/products',
     name: 'admin-products',
     component: ProductsCRUD,
-    meta: { requiresAuth: true }
+    meta: { 
+      requiresAuth: true,
+      requiresAdmin: true 
+    }
   }
 ]
 
@@ -47,16 +72,24 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   
-  // Solo proteger rutas marcadas explícitamente
+  // Verificar autenticación primero
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
-    // Redirigir al login (ruta sin protección)
-    next('/admin')
-  } else {
-    next()
+    return next('/admin')
   }
+
+  // Verificar rutas que requieren admin
+  const adminRoutes = ['/admin/users', '/admin/products']
+  if (adminRoutes.includes(to.path)) {
+    if (!authStore.isAdmin) {
+      // Redirigir a dashboard o mostrar error
+      return next('/admin/dashboard')
+    }
+  }
+
+  next()
 })
 
 

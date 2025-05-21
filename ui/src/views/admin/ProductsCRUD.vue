@@ -69,7 +69,7 @@
 
         <!-- Modal para Crear/Editar Producto -->
         <el-dialog v-model="isModalVisible" :title="currentProduct.id ? 'Editar Producto' : 'Nuevo Producto'"
-            width="600px" :before-close="closeModal" class="gamer-modal">
+            :before-close="closeModal" class="gamer-modal" style="min-width: 400px;">
             <el-form :model="currentProduct" ref="productForm" label-position="top">
                 <el-row :gutter="20">
                     <el-col :span="24">

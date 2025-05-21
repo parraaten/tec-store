@@ -88,3 +88,7 @@ a,
   gap: 8px;
   margin-top: 10px;
 }
+
+h2 {
+    text-shadow: 0 0 8px rgba(251, 146, 60, 0.3);
+}
