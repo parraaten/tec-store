@@ -16,13 +16,14 @@
         <el-icon :size="60" class="animate-spin text-orange-400"><Loading /></el-icon>
       </div>
 
-      <div v-else class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div v-else  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         <ProductCard 
           v-for="product in products" 
           :key="product.id" 
           :product="product"
           class="transition-transform hover:scale-105 duration-300"
-        />
+          @click="goToDetail(product.id)" 
+        /> 
       </div>
 
       <!-- Mensaje cuando no hay productos -->
@@ -49,9 +50,16 @@ import axios from '@/config/axios'
 import ProductCard from '@/components/ProductCard.vue'
 import { Loading, Box, Plus } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
+import { useRouter } from 'vue-router'
+import ProductDetail from './ProductDetail.vue'
 
 const products = ref([])
 const loading = ref(true)
+const router = useRouter()
+
+const goToDetail = (id) => {
+  router.push({name : 'productDetail', params : { id }})
+}
 
 onMounted(async () => {
   try {

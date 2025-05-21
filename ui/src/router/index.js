@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import CartView from '@/views/CartView.vue'
+import ProductDetail from '@/views/ProductDetail.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import AdminDashboard from '@/views/admin/Dashboard.vue'
 import ProductsCRUD from '@/views/admin/ProductsCRUD.vue'
@@ -21,6 +22,11 @@ const routes = [
     path: '/admin',
     name: 'admin-login',
     component: AdminDashboard
+  },
+  {
+    path: '/product/:id',
+    name: 'productDetail',
+    component: ProductDetail
   },
   {
     path: '/register',
