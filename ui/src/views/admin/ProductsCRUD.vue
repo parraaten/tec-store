@@ -6,65 +6,104 @@
             <p class="gamer-subtitle">Administra tu catálogo de productos</p>
         </div>
 
-        <!-- Tarjeta contenedora con efecto neón -->
+        <!-- Tarjeta contenedora -->
         <div class="gamer-card">
             <!-- Botón para crear nuevo producto -->
             <el-button type="primary" class="create-button" @click="openCreateModal">
-                <el-icon><plus /></el-icon>
-                <span>
-                    Nuevo Producto
-                </span>
+                <el-icon>
+                    <plus />
+                </el-icon>
+                <span>Nuevo Producto</span>
             </el-button>
 
-            <!-- Tabla de Productos con estilo gamer -->
-            <el-table :data="products" style="width: 100%" :loading="loading" class="gamer-table">
-                <el-table-column label="Producto" >
-                    <template #default="scope">
-                        <div class="product-cell">
-                            <el-image v-if="scope.row.image" :src="scope.row.image" fit="cover" class="product-image">
-                                <template #error>
-                                    <div class="image-error">
-                                        <i class="el-icon-picture-outline"></i>
+            <!-- Tabla de Productos con nuevo diseño -->
+            <div class="bg-gray-800 rounded-lg shadow overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-700">
+                        <thead class="bg-gray-700">
+                            <tr>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Producto</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Descripción</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Precio</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                    Stock</th>
+                                <th
+                                    class="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-gray-800 divide-y divide-gray-700">
+                            <tr v-for="product in products" :key="product.id" class="hover:bg-gray-750">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center">
+                                        <el-image v-if="product.image" :src="product.image" fit="cover"
+                                            class="w-10 h-10 rounded-md mr-3">
+                                            <template #error>
+                                                <div
+                                                    class="w-10 h-10 bg-gray-700 flex items-center justify-center rounded-md">
+                                                    <el-icon>
+                                                        <Picture />
+                                                    </el-icon>
+                                                </div>
+                                            </template>
+                                        </el-image>
+                                        <span class="text-sm text-gray-300">{{ product.name }}</span>
                                     </div>
-                                </template>
-                            </el-image>
-                            <div class="product-info">
-                                <strong>{{ scope.row.name }}</strong>
-                                <small class="description-truncated">{{ scope.row.description }}</small>
-                            </div>
-                        </div>
-                    </template>
-                </el-table-column>
-                <el-table-column label="Precio" width="120" align="center">
-                    <template #default="scope">
-                        <span class="price-tag">{{ formatPrice(scope.row.price) }}</span>
-                    </template>
-                </el-table-column>
-                <el-table-column label="Stock" prop="stock" width="120" align="center">
-                    <template #default="scope">
-                        <el-tag :type="scope.row.stock > 10 ? 'success' : scope.row.stock > 0 ? 'warning' : 'danger'">
-                            {{ scope.row.stock }} unidades
-                        </el-tag>
-                    </template>
-                </el-table-column>
-                <el-table-column label="Acciones" width="180" align="center">
-                    <template #default="scope">
-                        <el-tooltip content="Editar" placement="top">
-                        <el-button size="small" type="primary" circle @click="openEditModal(scope.row)">
-                        <el-icon><EditPen /></el-icon>
-                        </el-button>
-                        </el-tooltip>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <p class="text-sm text-gray-300 line-clamp-2">{{ product.description }}</p>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-green-400">
+                                    {{ formatPrice(product.price) }}
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span :class="{
+                                        'px-2 py-1 rounded-full text-xs': true,
+                                        'bg-green-900 text-green-300': product.stock > 10,
+                                        'bg-yellow-900 text-yellow-300': product.stock > 0 && product.stock <= 10,
+                                        'bg-red-900 text-red-300': product.stock === 0
+                                    }">
+                                        {{ product.stock }} unidades
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="flex items-center space-x-2">
+                                        <!-- Botón Editar - Color azul -->
+                                        <button @click="openEditModal(product)"
+                                            class="p-1 text-blue-400 hover:text-blue-300 transition-colors"
+                                            title="Editar producto">
+                                            <el-icon>
+                                                <EditPen />
+                                            </el-icon>
+                                        </button>
 
-                        <el-tooltip content="Eliminar" placement="top">
-                        <el-button size="small" type="danger"  circle @click="deleteProduct(scope.row.id)">
-                        <el-icon><Delete /></el-icon>
-                        </el-button>
-                        </el-tooltip>
+                                        <!-- Botón Eliminar - Color rojo -->
+                                        <button @click="deleteProduct(product.id)"
+                                            class="p-1 text-red-400 hover:text-red-300 transition-colors"
+                                            title="Eliminar producto">
+                                            <el-icon>
+                                                <Delete />
+                                            </el-icon>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                    </template>
-                </el-table-column>
-            </el-table>
-            
+            <!-- Cargando -->
+            <div v-if="loading" class="mt-8 text-center text-gray-400">
+                Cargando productos...
+            </div>
         </div>
 
         <!-- Modal para Crear/Editar Producto -->
@@ -120,10 +159,10 @@
                             <el-upload class="upload-demo" action="#" :on-change="handleImageChange"
                                 :auto-upload="false" :show-file-list="false">
                                 <div class="image-preview-list">
-                             
+
                                     <el-image v-if="currentProduct.image && typeof currentProduct.image === 'string'"
-                                    :src="currentProduct.image" fit="cover" class="preview-image"
-                                    :preview-src-list="[currentProduct.image]">
+                                        :src="currentProduct.image" fit="cover" class="preview-image"
+                                        :preview-src-list="[currentProduct.image]">
                                     </el-image>
                                     <span v-if="currentProduct.imageFile" class="image-name">
                                         {{ currentProduct.imageFile.name || 'Imagen seleccionada' }}
@@ -137,7 +176,7 @@
                                     </div>
                                 </template>
                             </el-upload>
-    
+
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -157,6 +196,7 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { Delete, EditPen, Plus, Picture } from '@element-plus/icons-vue'
 import axios from '@/config/axios'
 import { ElNotification, ElMessageBox } from 'element-plus'
 import { useAuthStore } from '@/stores/auth'
@@ -299,7 +339,7 @@ const saveProduct = async () => {
         closeModal();
     } catch (error) {
         console.error('Error guardando el producto:', error);
-        
+
         if (error.response?.status === 401) {
             // Token inválido o expirado
             const authStore = useAuthStore();
@@ -365,6 +405,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+/* Mantener los estilos gamer del contenedor */
 .gamer-container {
     max-width: 1400px;
     margin: 0 auto;
@@ -419,40 +460,111 @@ onMounted(async () => {
     transform: translateY(-2px);
 }
 
-.gamer-table {
-    border-radius: 8px;
-    overflow: hidden;
+/* Estilos para la nueva tabla */
+.bg-gray-800 {
     background-color: #2d3436;
+}
+
+.bg-gray-700 {
+    background-color: #201529;
+}
+
+.hover\:bg-gray-750:hover {
+    background-color: #3d3d3d;
+}
+
+.text-gray-300 {
     color: #dfe6e9;
 }
 
-.gamer-table :deep(.el-table__header) th {
-    background-color: #201529;
+.line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.text-red-400 {
+    color: #ff7675;
+}
+
+.text-red-400:hover {
+    color: #ff5252;
+}
+
+/* Estilos para el modal */
+.gamer-modal {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.gamer-modal .el-dialog {
+    background: #2d3436;
     color: #dfe6e9;
+    border: 1px solid #6c5ce7;
+    box-shadow: 0 0 20px rgba(108, 92, 231, 0.3);
+}
+
+.gamer-modal .el-dialog__header {
+    border-bottom: 1px solid #3d3d3d;
+    padding: 20px;
+}
+
+.gamer-modal .el-dialog__title {
+    color: #a29bfe;
+    font-size: 1.5rem;
     font-weight: bold;
 }
 
-.gamer-table :deep(.el-table__body) tr {
-    background-color: #2d3436;
-    color: #a1e3ff;
+.gamer-modal .el-dialog__body {
+    padding: 20px;
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
-.gamer-table :deep(.el-table__body) tr:hover {
+.modal-content-container {
+    padding: 10px;
+}
+
+/* Estilos para el formulario */
+.gamer-modal .el-form-item__label {
+    color: #b2bec3;
+    font-weight: 500;
+}
+
+.gamer-modal .el-input__inner,
+.gamer-modal .el-textarea__inner {
     background-color: #3d3d3d;
+    border: 1px solid #4a4a4a;
+    color: #dfe6e9;
 }
 
-.product-cell {
+.gamer-modal .el-input-number__decrease,
+.gamer-modal .el-input-number__increase {
+    background-color: #4a4a4a;
+    color: #dfe6e9;
+}
+
+/* Estilos para la carga de imágenes */
+.image-upload-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.image-preview {
     display: flex;
     align-items: center;
     gap: 15px;
+    margin-top: 10px;
 }
 
-.product-image {
-    width: 50px;
-    height: 50px;
-    border-radius: 5px;
+.preview-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 8px;
+    border: 1px solid #4a4a4a;
     object-fit: cover;
-    background-color: #3d3d3d;
 }
 
 .image-error {
@@ -465,99 +577,23 @@ onMounted(async () => {
     color: #6c5ce7;
 }
 
-.product-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.description-truncated {
-    color: #b2bec3;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 150px;
-}
-
-.price-tag {
-    font-weight: bold;
-    color: #00b894;
-}
-
-.gamer-modal :deep(.el-dialog) {
-    background-color: #2d3436;
-    color: #dfe6e9;
-    border-radius: 10px;
-    border: 1px solid #6c5ce7;
-}
-
-.gamer-modal :deep(.el-dialog__title) {
-    color: #a29bfe;
-    font-weight: bold;
-}
-
-.gamer-modal :deep(.el-form-item__label) {
-    color: #b2bec3;
-}
-
-.preview-image {
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    margin-top: 10px;
-    border: 1px solid #3d3d3d;
-    align-self: center;
-}
-
 .image-name {
-    margin-left: 10px;
     color: #b2bec3;
     font-size: 0.9rem;
 }
 
-/* Efecto neón para los botones */
-.el-button--primary {
-    position: relative;
-    overflow: hidden;
+.el-upload__tip {
+    color: #7f8c8d;
+    font-size: 0.8rem;
+    margin-top: 5px;
 }
 
-.el-button--primary:after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: -2px;
-    right: -2px;
-    bottom: -2px;
-    background: linear-gradient(45deg, #6c5ce7, #a29bfe, #6c5ce7);
-    background-size: 200% 200%;
-    z-index: -1;
-    border-radius: 4px;
-    animation: gradient 3s ease infinite;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .product-cell {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 5px;
-    }
-
-    .description-truncated {
-        max-width: 100%;
-    }
+/* Estilos para el footer del modal */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 10px 20px;
+    border-top: 1px solid #3d3d3d;
 }
 </style>
