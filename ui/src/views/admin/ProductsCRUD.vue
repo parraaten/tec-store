@@ -73,7 +73,7 @@
                                         {{ product.stock }} unidades
                                     </span>
                                 </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
+                                <td class="py-4 whitespace-nowrap">
                                     <div class="flex items-center space-x-2">
                                         <!-- Botón Editar - Color azul -->
                                         <button @click="openEditModal(product)"
@@ -108,7 +108,7 @@
 
         <!-- Modal para Crear/Editar Producto -->
         <el-dialog v-model="isModalVisible" :title="currentProduct.id ? 'Editar Producto' : 'Nuevo Producto'"
-            :before-close="closeModal" class="gamer-modal" style="min-width: 400px;">
+            :before-close="closeModal" class="gamer-modal" style="min-width: 300px; max-width: 600px;">
             <el-form :model="currentProduct" ref="productForm" label-position="top">
                 <el-row :gutter="20">
                     <el-col :span="24">

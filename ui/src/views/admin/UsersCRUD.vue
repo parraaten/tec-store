@@ -38,7 +38,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{ user.email }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">{{
                                     formatDate(user.created_at) }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                                <td class="py-4 whitespace-nowrap text-sm text-gray-300">
                                     <button @click="deleteUser(user.id)" :disabled="user.id === 1"
                                         class="text-red-400 hover:text-red-300 disabled:text-gray-500 disabled:cursor-not-allowed"
                                         title="Eliminar usuario">
