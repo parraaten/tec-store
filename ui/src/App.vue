@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col bg-gray-900">
     <!-- Navbar con estilo gamer -->
-    <Navbar class="z-50" />
+    <Navbar class="z-5" />
 
     <!-- Contenido principal con efecto de neón -->
     <main class="flex-grow relative overflow-hidden">
@@ -25,7 +25,7 @@
     </main>
 
     <!-- Footer con estilo gamer -->
-    <Footer class="z-50" />
+    <Footer class="z-5" />
   </div>
 </template>
 
