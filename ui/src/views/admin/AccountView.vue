@@ -64,8 +64,11 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import { useRouter } from "vue-router";
+import { ElNotification, ElMessageBox } from 'element-plus';
+import { useAuthStore } from '@/stores/auth'
+import { useRouter } from 'vue-router'
 
+const authStore = useAuthStore()
 const router = useRouter();
 const user = ref(null);
 const error = ref(null);
@@ -89,23 +92,60 @@ const changePassword = async () => {
     successMessage.value = "Contraseña cambiada exitosamente";
     showChangePassword.value = false;
     passwordData.value.new_password = "";
+    ElNotification({
+      title: 'Contraseña actualizada',
+      message: 'Vuelve a iniciar sesión:D',
+      type: 'success',
+      duration: 3000
+    });
+    await authStore.logout();
+    window.location.href = '/admin/dashboard';
   } catch (err) {
     error.value = err.response?.data?.message || "Error al cambiar la contraseña";
   }
 };
 
-const confirmDeleteAccount = () => {
-  if (confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.")) {
-    deleteAccount();
+const confirmDeleteAccount = async () => {
+  try {
+    await ElMessageBox.confirm(
+      '¿Estás seguro de eliminar tu cuenta permanentemente? Esta acción no se puede deshacer.',
+      'Confirmar eliminación',
+      {
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        type: 'warning',
+        center: true,
+        customClass: 'delete-confirm-dialog'
+      }
+    );
+    
+    await deleteAccount();
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('Error in confirmation:', error);
+    }
   }
 };
 
 const deleteAccount = async () => {
   try {
     await axios.delete(`/users/${user.value.id}`);
-    router.push("/");
+    ElNotification({
+      title: 'Cuenta eliminada',
+      message: 'Tu cuenta ha sido eliminada exitosamente',
+      type: 'success',
+      duration: 3000
+    });
+    await authStore.logout();
+    window.location.href = '/admin/dashboard';
   } catch (err) {
     error.value = "Error al eliminar la cuenta";
+    ElNotification({
+      title: 'Error',
+      message: 'No se pudo eliminar la cuenta',
+      type: 'error',
+      duration: 3000
+    });
   }
 };
 </script>
