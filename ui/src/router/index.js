@@ -6,6 +6,7 @@ import RegisterView from '@/views/RegisterView.vue'
 import AdminDashboard from '@/views/admin/Dashboard.vue'
 import UsersCRUD from '@/views/admin/UsersCRUD.vue'
 import ProductsCRUD from '@/views/admin/ProductsCRUD.vue'
+import PaymentView from '@/views/PaymentView.vue'
 import { useAuthStore } from '@/stores/auth'
 
 const routes = [
@@ -18,6 +19,11 @@ const routes = [
     path: '/cart',
     name: 'cart',
     component: CartView
+  },
+  {
+    path: '/payment',
+    name: 'payment',
+    component: PaymentView
   },
   {
     path: '/admin',

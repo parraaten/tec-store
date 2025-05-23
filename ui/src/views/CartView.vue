@@ -113,8 +113,10 @@
 <script setup>
 import { useCartStore } from '@/stores/cart'
 import { ElNotification } from 'element-plus'
+import { useRouter } from 'vue-router'
 
 const cartStore = useCartStore()
+const router = useRouter()
 
 const formatPrice = (price) => {
   return Number(price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")
@@ -139,13 +141,13 @@ const updateQuantity = (item) => {
 }
 
 const checkout = () => {
-  ElNotification({
+  /*ElNotification({
     title: 'Compra realizada',
     message: 'Tu pedido ha sido procesado con éxito',
     type: 'success',
     position: 'top-right'
-  })
-  cartStore.clearCart()
+  })*/
+  router.push('/payment')
 }
 </script>
 
