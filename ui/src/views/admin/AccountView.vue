@@ -31,6 +31,7 @@
       <!-- Formulario cambiar contraseña -->
       <div v-if="showChangePassword" class="password-form">
         <h3>🔒 Cambiar Contraseña</h3>
+        <p><i>Nota: Se cerrará sesión despues de cambiar la contraseña.</i></p>
 
         <label>Contraseña actual</label>
         <input

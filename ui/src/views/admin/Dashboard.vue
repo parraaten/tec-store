@@ -44,7 +44,7 @@
                     PANEL DE CONTROL
                 </h2>
                 <button @click="authStore.logout"
-                    class="flex items-center text-gray-400 hover:text-orange-400 transition-colors">
+                    class="flex items-center text-gray-400 hover:text-red-400 transition-colors">
                     <el-icon class="mr-1">
                         <SwitchButton />
                     </el-icon>
