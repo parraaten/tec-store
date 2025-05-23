@@ -85,10 +85,13 @@
     <p>Producto no encontrado.</p>
   </div>
 
-     <div class="flex justify-center items-center mt-6 space-x-1 text-yellow-400 text-2xl">
-        <el-icon v-for="n in 5" :key="n">
-        <Star/>
-        </el-icon>
+    <div class="flex justify-center items-center mt-6 space-x-1 text-yellow-400 text-2xl">
+      <el-icon v-for="n in 5" :key="n">
+        <component 
+          :is="StarFilled" 
+          :class="n <= averageRating ? 'opacity-100' : 'opacity-30'" 
+        />
+      </el-icon>
     </div>
 
 <div class="max-w-3xl mx-auto mt-10 text-white">
@@ -147,16 +150,23 @@ import axios from '@/config/axios'
 import { ElNotification } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import { useCartStore } from '@/stores/cart'
+import { Star, StarFilled } from '@element-plus/icons-vue' // Importa los íconos que uses
 
 const authStore = useAuthStore()
 const route = useRoute()
 const product = ref(null)
-const reviews = ref([])
+  const reviews = ref([ 
+    { rating: 1 },
+    { rating: 2 },
+    { rating: 3 },
+    { rating: 4 },
+    { rating: 5 },])
 const loading = ref(true)
 const imageError = ref(false)
 const cartStore = useCartStore()
 const auth = useAuthStore()
 
+//Recarga las review al momento de publicar
 const loadReviews = async () => {
   try {
     const response = await axios.get(`/products/${route.params.id}/reviews`)
@@ -165,6 +175,12 @@ const loadReviews = async () => {
     console.error('Error al cargar reseñas:', error)
   }
 }
+//Realiza un round del total de estrellas
+const averageRating = computed(() => {
+  if (reviews.value.length === 0) return 0
+  const total = reviews.value.reduce((acc, r) => acc + r.rating, 0)
+  return Math.round(total / reviews.value.length)
+})
 
 onMounted(async () => {
   try {
