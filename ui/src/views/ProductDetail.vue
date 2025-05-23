@@ -85,22 +85,13 @@
     <p>Producto no encontrado.</p>
   </div>
 
-
     <div class="flex justify-center items-center mt-6 space-x-1 text-yellow-400 text-2xl">
       <el-icon v-for="n in 5" :key="n">
-
-<span class="ml-2 text-gray-300 text-sm">({{ product.rating.toFixed(1) }})</span>
-    <div class="flex justify-center items-center mt-6 space-x-1 text-yellow-400 text-2xl">
-      
-      <el-icon v-for="n in 5" :key="n">
-        
-
         <component 
           :is="StarFilled" 
           :class="n <= averageRating ? 'opacity-100' : 'opacity-30'" 
         />
       </el-icon>
-
     </div>
 
 <div class="max-w-3xl mx-auto mt-10 text-white">
