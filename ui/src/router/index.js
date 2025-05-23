@@ -41,13 +41,13 @@ const routes = [
     name: 'admin-dashboard',
     component: AdminDashboard,
     meta: { requiresAuth: true }
-  },/*
+  },
   {
-    path: '/admin/account',
+    path: '/admin/account/:id',
     name: 'admin-account',
     component: () => import('@/views/admin/AccountView.vue'),
     meta: { requiresAuth: true }
-  },*/
+  },
   {
     path: '/admin/users',
     name: 'admin-users',

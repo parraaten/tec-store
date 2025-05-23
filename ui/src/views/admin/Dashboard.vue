@@ -55,7 +55,7 @@
             <!-- Módulos principales -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 py-10">
                 <!-- Módulo de Cuenta -->
-            <router-link to="/admin/account"
+            <router-link :to="`/admin/account/${authStore.user.id}`"
                 class="group bg-gray-800 hover:bg-gray-700 rounded-xl p-6 shadow-lg border border-gray-700 hover:border-blue-500 transition-all">
                 <div class="flex items-center">
                     <div class="p-3 bg-blue-500/20 rounded-lg mr-4 group-hover:bg-blue-500/30 transition">
