@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:8000/api',
+    baseURL: 'https://laravel-app-620844049774.us-central1.run.app/api',
     timeout: 10000,
 });
 
