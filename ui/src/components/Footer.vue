@@ -5,13 +5,16 @@
           <!-- Logo y derechos -->
           <div class="mb-4 md:mb-0">
             <router-link to="/" class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400">
-              Tienda Gamer
+              Tec-Store
             </router-link>
           </div>
           
           <!-- Derechos -->
           <div class="text-gray-500 text-sm">
-            © {{ new Date().getFullYear() }} Tienda Gamer. Todos los derechos reservados.
+            © {{ new Date().getFullYear() }} Tec-Store.
+            <router-link to="/terms">
+              Términos y condiciones
+            </router-link>
           </div>
         </div>
       </div>

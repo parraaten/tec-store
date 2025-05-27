@@ -5,7 +5,7 @@
                 <!-- Logo con efecto -->
                 <router-link to="/"
                     class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-orange-400 to-yellow-400 hover:from-orange-300 hover:to-yellow-300 transition-all duration-300">
-                    Tienda Gamer
+                    Tec-Store
                 </router-link>
 
                 <!-- Menú principal -->

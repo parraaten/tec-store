@@ -1,5 +1,6 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter,createWebHashHistory } from "vue-router";
 import HomeView from '@/views/HomeView.vue'
+import Terms from '@/views/Terms.vue'
 import CartView from '@/views/CartView.vue'
 import ProductDetail from '@/views/ProductDetail.vue'
 import RegisterView from '@/views/RegisterView.vue'
@@ -14,6 +15,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
+  },
+  {
+    path: '/terms',
+    name: 'terms',
+    component: Terms
   },
   {
     path: '/cart',
@@ -75,7 +81,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes
 })
 
